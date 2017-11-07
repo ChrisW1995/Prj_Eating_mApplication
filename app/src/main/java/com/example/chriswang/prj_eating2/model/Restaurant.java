@@ -9,6 +9,10 @@ public class Restaurant {
     private String r_Address;
     private String r_Phone;
     private String r_id;
+    private String r_CloseTime;
+    private String r_OpenTime;
+
+
 
     public String getR_id() {
         return r_id;
@@ -18,12 +22,31 @@ public class Restaurant {
         this.r_id = r_id;
     }
 
-    public Restaurant(String r_Name, String r_Address, String r_Phone, String r_id) {
+    public Restaurant(String r_Name, String r_Address, String r_Phone, String r_id,
+                      String r_OpenTime, String r_CloseTime) {
         this.r_Name = r_Name;
         this.r_Address = r_Address;
         this.r_Phone = r_Phone;
         this.r_id = r_id;
+        this.r_OpenTime = r_OpenTime;
+        this.r_CloseTime = r_CloseTime;
 
+    }
+
+    public String getR_CloseTime() {
+        return r_CloseTime;
+    }
+
+    public void setR_CloseTime(String r_CloseTime) {
+        this.r_CloseTime = r_CloseTime;
+    }
+
+    public String getR_OpenTime() {
+        return r_OpenTime;
+    }
+
+    public void setR_OpenTime(String r_OpenTime) {
+        this.r_OpenTime = r_OpenTime;
     }
 
     public Restaurant() {

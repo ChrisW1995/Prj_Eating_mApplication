@@ -25,6 +25,9 @@
     <string name="name">姓名</string>
     <string name="email">E-mail</string>
     <string name="phone">手機電話</string>
+    <string name="text_Reserve">我要訂位</string>
+    <string name="text_Waiting">我要候位</string>
+
 
     <string name="restaurant_list_api">http://pccu-eating.azurewebsites.net/api/Restaurant/GetList</string>
     <!-- TODO: Remove or change this placeholder text -->

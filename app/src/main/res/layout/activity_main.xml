@@ -5,7 +5,8 @@
     android:id="@+id/outer_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.chriswang.prj_eating2.MainActivity">
+    tools:context="com.example.chriswang.prj_eating2.MainActivity"
+    tools:layout_editor_absoluteY="35dp">
 
 
     <LinearLayout
@@ -20,12 +21,13 @@
 
 
     </LinearLayout>
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
         app:itemBackground="@color/EatingMain"
+        android:background="@color/bottom_view_color"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

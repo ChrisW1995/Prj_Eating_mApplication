@@ -1,17 +1,24 @@
 package com.example.chriswang.prj_eating2.adapters;
 
 import android.app.Activity;
+
 import android.app.LauncherActivity;
+import android.content.Context;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.chriswang.prj_eating2.EmptyActivity;
 import com.example.chriswang.prj_eating2.R;
+import com.example.chriswang.prj_eating2.RestaurantDetailActivity;
 import com.example.chriswang.prj_eating2.model.Restaurant;
 
 import java.util.ArrayList;
@@ -41,7 +48,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public void onBindViewHolder(RestaurantHolder holder, int position) {
-        Restaurant restaurant = mData.get(position);
+        final Restaurant restaurant = mData.get(position);
 
         holder.setTvR_Name(restaurant.getR_Name());
         holder.setTvR_Address(restaurant.getR_Address());
@@ -50,7 +57,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(mActivity, RestaurantDetailActivity.class);
+                intent.putExtra("r_id", restaurant.getR_id());
+                intent.putExtra("name", restaurant.getR_Name());
+                intent.putExtra("phone", restaurant.getR_Phone());
+                intent.putExtra("address", restaurant.getR_Address());
 
+                mActivity.startActivity(intent);
             }
         });
 

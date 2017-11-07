@@ -92,7 +92,7 @@ public class ListFragment extends Fragment {
     }
 
     private void init(View v) {
-        mRestaurantRecyclerView = (RecyclerView)v.findViewById(R.id.restaurant_recycler);
+        mRestaurantRecyclerView = v.findViewById(R.id.restaurant_recycler);
         mRestaurantRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRestaurantRecyclerView.setHasFixedSize(true);
         mRestaurantCollection = new ArrayList<>();
