@@ -24,6 +24,7 @@ public class LoginRequest extends StringRequest {
             params = new HashMap<>();
             params.put("C_Account", C_Account);
             params.put("C_Password", C_Password);
+
         } catch (Exception e) {
             Log.d("RegisterRequest: ", e.toString());
         }

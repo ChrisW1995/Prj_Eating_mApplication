@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.example.chriswang.prj_eating2.Service.CustomFunction;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtPhone = findViewById(R.id.edtPhone);
         btnRegister = findViewById(R.id.btnRegister);
+        customFunction = new CustomFunction();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                             switch(response.statusCode){
                                 case 400:
                                     json = new String(response.data);
-                                    json = trimMessage(json, "Message");
+                                    json = customFunction.trimMessage(json, "Message");
                                     if(json != null) displayMessage(json);
                                     break;
 
@@ -124,11 +125,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
-    public void displayMessage(String toastString){
-        Toast.makeText(RegisterActivity.this, toastString, Toast.LENGTH_LONG).show();
-    }
     public String trimMessage(String json, String key){
         String trimmedString;
 
@@ -142,4 +141,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         return trimmedString;
     }
+    public void displayMessage(String toastString){
+        Toast.makeText(RegisterActivity.this, toastString, Toast.LENGTH_LONG).show();
+    }
+
 }

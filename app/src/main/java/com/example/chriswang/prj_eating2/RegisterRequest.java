@@ -15,12 +15,12 @@ import java.util.Map;
 
 public class RegisterRequest extends StringRequest{
 
-    private static final String REGISTER_REQUEST_URL = "http://140.137.12.79:8010/api/Customer/Register";
+    private static final String REGISTER_REQUEST_URL = "http://pccu-eating.azurewebsites.net/api/Customer/Register";
     private Map<String, String> params;
 
 
     public RegisterRequest(String C_Account, String C_Password, String C_Name, String C_PhoneNum, String Email,
-                           Response.Listener<String> listener, Response.ErrorListener errorListener) {
+                            Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(Method.POST, REGISTER_REQUEST_URL, listener, errorListener);
         try {
             params = new HashMap<>();

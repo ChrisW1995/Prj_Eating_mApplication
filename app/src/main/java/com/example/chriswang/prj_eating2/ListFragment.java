@@ -1,10 +1,16 @@
 package com.example.chriswang.prj_eating2;
 
+import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
+
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,14 +20,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.HttpClientStack;
 import com.baoyz.widget.PullRefreshLayout;
+import com.example.chriswang.prj_eating2.Service.FCMIdService;
+import com.example.chriswang.prj_eating2.Service.GPS_Service;
+import com.example.chriswang.prj_eating2.Service.SharedPrefManager;
 import com.example.chriswang.prj_eating2.adapters.RestaurantAdapter;
 import com.example.chriswang.prj_eating2.model.Restaurant;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +36,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.Buffer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -59,6 +65,11 @@ public class ListFragment extends Fragment {
     private RestaurantAdapter mRestaurantAdapter;
     private ArrayList<Restaurant> mRestaurantCollection;
     private PullRefreshLayout pullRefreshLayout;
+    private BroadcastReceiver broadcastReceiver;
+    private GPS_Service gps_service;
+    private double c_lat, c_lng;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = "MainActivity";
     public ListFragment() {
         // Required empty public constructor
     }
@@ -81,12 +92,14 @@ public class ListFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
 
     }
@@ -106,21 +119,54 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_list, container, false);
+        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+        gps_service = new GPS_Service(getContext());
+        getGPS();
+
+
         init(v);
         new FetchDataTask().execute();
         pullRefreshLayout = v.findViewById(R.id.swipeRefreshLayout);
         pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                getGPS();
                 init(v);
                 new FetchDataTask().execute();
                 pullRefreshLayout.setRefreshing(false);
                 
             }
         });
+        
 
         return v;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Toast.makeText(getActivity(), SharedPrefManager.getmInstance(getContext()).getToken(),Toast.LENGTH_SHORT).show();
+
+            }
+        };
+
+        Log.d(TAG, "onResume: "+SharedPrefManager.getmInstance(getContext()).getToken());
+    }
+
+    public void getGPS(){
+
+        Location location = gps_service.getLocation();
+
+        if(location!=null){
+            c_lat = location.getLatitude();
+            c_lng = location.getLongitude();
+        }
+    }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -135,8 +181,12 @@ public class ListFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            Toast.makeText(context, "List Fragment", Toast.LENGTH_SHORT).show();
+            if(c_lat != 0){
+
+            }
         }
+
+        getContext().registerReceiver(broadcastReceiver, new IntentFilter(FCMIdService.TOKEN_BROADCAST));
     }
 
     @Override
@@ -145,16 +195,6 @@ public class ListFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -205,6 +245,9 @@ public class ListFragment extends Fragment {
                     String r_Area;
                     String r_DetailAddress;
                     String r_id;
+                    String imgPath;
+                    double distance;
+                    double lat, lng;
 
 //                    JSONObject jRestaurant = (JSONObject)jsonObject.(i);
                     r_Name = restaurantsArray.getJSONObject(i).getString("R_Name");
@@ -215,11 +258,27 @@ public class ListFragment extends Fragment {
                     r_Address = r_County+r_Area+r_DetailAddress;
                     r_Phone = restaurantsArray.getJSONObject(i).getString("R_PhoneNum");
                     r_id = restaurantsArray.getJSONObject(i).getString("Id");
+                    lat = restaurantsArray.getJSONObject(i).getDouble("Lat");
+                    lng = restaurantsArray.getJSONObject(i).getDouble("Lng");
+                    distance = gps_service.getDistancBetweenTwoPoints(lat, lng, c_lat, c_lng);
+                    if(!restaurantsArray.getJSONObject(i).getString("ImagePath").isEmpty()){
+                        imgPath = restaurantsArray.getJSONObject(i).getString("ImagePath");
+
+                    }
+                    else
+                        imgPath = "";
+
                     Restaurant restaurant = new Restaurant();
                     restaurant.setR_Name(r_Name);
                     restaurant.setR_Address(r_Address);
                     restaurant.setR_Phone(r_Phone);
                     restaurant.setR_id(r_id);
+                    restaurant.setR_lat(lat);
+                    restaurant.setR_lng(lng);
+                    DecimalFormat df = new DecimalFormat("##.00");
+
+                    restaurant.setDistance(Double.parseDouble(df.format(distance/1000)));
+                    restaurant.setR_imgPath("http://pccu-eating.azurewebsites.net"+imgPath);
 
                     mRestaurantCollection.add(restaurant);
                 }

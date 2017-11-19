@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ffedf3</color>
     <color name="front_background">#ffffff</color>
-    <color name="EatingMain">#F08F90</color>
+    <color name="EatingMain">#f08f90</color>
     <color name="listBack">#FFF</color>
     <color name="listText">#515151</color>
     <color name="bottom_view_color">#F08F90</color>

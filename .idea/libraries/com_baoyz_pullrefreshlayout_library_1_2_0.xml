@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="com.baoyz.pullrefreshlayout:library-1.2.0">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-1.2.0.aar/95fac4c9d069326b6f9455f9fc3e2433/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-1.2.0.aar/95fac4c9d069326b6f9455f9fc3e2433/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-1.2.0.aar/7ac984846c3a2c9f07c1b3dbb9a54dd0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-1.2.0.aar/7ac984846c3a2c9f07c1b3dbb9a54dd0/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

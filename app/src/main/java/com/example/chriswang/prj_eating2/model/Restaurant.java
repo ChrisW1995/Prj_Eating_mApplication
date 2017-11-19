@@ -11,7 +11,10 @@ public class Restaurant {
     private String r_id;
     private String r_CloseTime;
     private String r_OpenTime;
-
+    private String r_imgPath;
+    private double r_lat;
+    private double r_lng;
+    private double distance;
 
 
     public String getR_id() {
@@ -23,14 +26,48 @@ public class Restaurant {
     }
 
     public Restaurant(String r_Name, String r_Address, String r_Phone, String r_id,
-                      String r_OpenTime, String r_CloseTime) {
+                      String r_OpenTime, String r_CloseTime, String r_imgPath) {
         this.r_Name = r_Name;
         this.r_Address = r_Address;
         this.r_Phone = r_Phone;
         this.r_id = r_id;
         this.r_OpenTime = r_OpenTime;
         this.r_CloseTime = r_CloseTime;
+        this.r_imgPath = r_imgPath;
 
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+
+    public double getR_lat() {
+        return r_lat;
+    }
+
+    public void setR_lat(double r_lat) {
+        this.r_lat = r_lat;
+    }
+
+    public double getR_lng() {
+        return r_lng;
+    }
+
+    public void setR_lng(double r_lng) {
+        this.r_lng = r_lng;
+    }
+
+    public String getR_imgPath() {
+        return r_imgPath;
+    }
+
+    public void setR_imgPath(String r_imgPath) {
+        this.r_imgPath = r_imgPath;
     }
 
     public String getR_CloseTime() {

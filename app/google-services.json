@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "889186037310",
+    "firebase_url": "https://pccu-eating-andoird.firebaseio.com",
+    "project_id": "pccu-eating-andoird",
+    "storage_bucket": "pccu-eating-andoird.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889186037310:android:fb250d6d7b763a12",
+        "android_client_info": {
+          "package_name": "com.example.chriswang.prj_eating2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889186037310-34lvjfq8bn45fsnl64s9se0859mam0vm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chriswang.prj_eating2",
+            "certificate_hash": "a34b3ba7907a868ef768837c09e9e5dca7b8b6ed"
+          }
+        },
+        {
+          "client_id": "889186037310-lgri3c4j44q1deitj76enmupm3hevl1v.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "889186037310-sq51ehpo9l86qh5vcf6c2kkbt9no4h6n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chriswang.prj_eating2",
+            "certificate_hash": "188d12eff94eb7e95c0db023983d00da87d014dd"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSpTc34IQ63QrDOrObEau7ECOJvg8xC4A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889186037310-lgri3c4j44q1deitj76enmupm3hevl1v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
