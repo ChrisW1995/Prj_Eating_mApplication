@@ -27,9 +27,9 @@
             <ImageView
                 android:id="@+id/img_DetailImg"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:scaleType="centerCrop"
+                android:layout_height="250dp"
                 android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 app:srcCompat="@android:color/background_dark" />
 
             <TextView

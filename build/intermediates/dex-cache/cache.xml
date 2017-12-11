@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/firebase-common-11.6.0.aar/e0bffe1baa4db2b447fd0fe15d0501ac/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="1cde19cbf9be88547ab4b7f03668eac5d91bd611">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/13.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/cardview-v7-26.1.0.aar/c2089841beb8bc8e7c866e2b061f1e97/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b4d6fbbb48b42dd03fd9c5a09b3b7a53266df6ed">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/19.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/78cbce58f4a46090dafc3e41acd88ce5/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6f4138a4e065826cb044d49faea4cfd7191773d1">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/ce28a8df915129fc2195fd6c51b701fd/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/18.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/d3f1793f5defe4a7d55421b25642ab29/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f97cf85b0fe70d37a705111dafa6b1b418ea1650">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/24.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/library-1.2.0.aar/a3fc8a74ef61b946a939532fae4dade8/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d05c16d86108d3d34377946a79d79f8485a46bfa">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/1fb0b4c42affa3b7c8d5b76354bea554/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="2442771a5590dd4eb4bce00c2e9dca9e22e4c963">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/26.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/transition-26.1.0.aar/575aa5049191725a06703ef3ed50a286/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="58b12bdb21a84f22e0dc3b047aeceb0a546b1b44">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/firebase-iid-11.6.0.aar/8ea9831c1e62195a346226aa6e295060/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d6399340139f67ce4faba06e97f256ef0d6817c0">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/12.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-26.1.0.aar/20bc373c8a1f019bf169f82cbf7b7eda/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b12cd9c87c3dfb012a911b6e38d2444ed0a65e1f">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/21.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.0.0/e414a4cb28434e25c4f6aa71426eb20cf4874ae9/common-1.0.0.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e414a4cb28434e25c4f6aa71426eb20cf4874ae9">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/38.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/annotations/4.3.0/c40d97c718d72daee5c0510384fef3c82e3c193d/annotations-4.3.0.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c40d97c718d72daee5c0510384fef3c82e3c193d">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/31.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/Library/Android/sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/29.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/3e56f8bfc6331e36616576c3ae2d8d5c/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="40392f30a601db5675cdf18192aab013d6fee6ec">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/support-fragment-26.1.0.aar/081e5eb9dd14b442f180d25452d94b46/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7efef32744ca4a436492d5cf28c08698cc2af256">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/22.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/firebase-jobdispatcher-0.5.2.aar/298cf3ba48b5cf3ffd3c757b3034facc/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="5a424dda1dfed15a9ca112aa128107b948e30e82">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/4.3.0/5ef2a3700ab3320576eab21ff504189e5a92a350/glide-4.3.0.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="5ef2a3700ab3320576eab21ff504189e5a92a350">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/20.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.1.0.aar/0fe73212240bbfb43d181fb8606e0fda/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="233f60a165ae622c8b36731502ebbda0f65e1930">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/25.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/firebase-analytics-11.6.0.aar/3f8b24ca38fa3fb0b55ba33b71738f0a/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e9b8fd995f9c6c2caeb49827f0b52e0e8cc621e0">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/10.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.1.0.aar/8f9fb060494f8e10928a2392376b4171/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="508f50705b4fde51a16259f29c854201a3044516">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/23.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/firebase-messaging-11.6.0.aar/8b9d0e18485148536843219c1ba5f8b3/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="9b8544d0c4d3a508ffc7da674ac79d5dc5d79395">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/disklrucache/4.3.0/d799574d83b103a845cd42730699757d46307037/disklrucache-4.3.0.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d799574d83b103a845cd42730699757d46307037">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/30.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/play-services-tasks-11.6.0.aar/a2cd5d892b330c0aa5ee737da0654dfc/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="729a6a1975c19d7461378172c7932f5c57f1c3fe">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/14.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/28005c6e2647ad35163c8827e9e81bff/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/16.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/26.1.0/814258103cf26a15fcc26ecce35f5b7d24b73f8/support-annotations-26.1.0.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="0814258103cf26a15fcc26ecce35f5b7d24b73f8">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/28.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/70265b1437f3ab2110ee7931f1c6ccce/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b62fdc4cfef174c1e456014195c83fa7de7dc041">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/33.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/gifdecoder/4.3.0/1017539654b72658c76825e7e4a7790017a79be0/gifdecoder-4.3.0.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="1017539654b72658c76825e7e4a7790017a79be0">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/27.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.6.0.aar/326969771b3f6bc82b53634b875e0322/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="869a1d15fa9d8e8aa36587b042f553c1baea46bc">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/15.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/fdf2e34836d4d024c804ce50dc6df5c3/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f428e2fbc9ed0b297e3a3f420e51e6982f66822d">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/volley-1.0.0.aar/e6859691fd896f676bf0bb6d6a0830a1/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/17.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/a6ffdc5f75127153847387adaf1cb10d/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a37fc31c5ceeaa4532a37358add1b189d8db4af1">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/modules-2/files-2.1/android.arch.core/common/1.0.0/a2d487452376193fc8c103dd2b9bd5f2b1b44563/common-1.0.0.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a2d487452376193fc8c103dd2b9bd5f2b1b44563">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/39.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ChrisWang/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-11.6.0.aar/a98d95db406a7a8e88fec8e7b7994748/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="da443aff9cd3c2cd75b957e0547e1ca2c4f30308">
+        <dex dex="/Users/ChrisWang/Prj_Eating_mApplication/app/build/intermediates/transforms/preDex/release/11.jar" />
+    </item>
+
+</items>

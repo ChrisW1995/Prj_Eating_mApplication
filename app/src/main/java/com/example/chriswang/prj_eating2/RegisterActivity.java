@@ -1,9 +1,7 @@
 package com.example.chriswang.prj_eating2;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +14,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.example.chriswang.prj_eating2.Request.RegisterRequest;
+import com.example.chriswang.prj_eating2.Request.SMSRequest;
 import com.example.chriswang.prj_eating2.Service.CustomFunction;
 
 import org.json.JSONException;
@@ -25,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText edtName, edtAccount, edtPassword, edtChkPassword,
             edtEmail, edtPhone;
     Button btnRegister;
+
     ProgressDialog progressDialog;
     private CustomFunction customFunction;
     @Override
@@ -32,14 +33,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-//        getSupportActionBar().hide();
-//        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         edtName = findViewById(R.id.edtName);
         edtAccount = findViewById(R.id.edtAccount);
         edtPassword = findViewById(R.id.edtPassword);
         edtChkPassword = findViewById(R.id.edtChkPassword);
         edtEmail = findViewById(R.id.edtEmail);
-        edtPhone = findViewById(R.id.edtPhone);
+        edtPhone = findViewById(R.id.edt_reserve_phone);
         btnRegister = findViewById(R.id.btnRegister);
         customFunction = new CustomFunction();
 
@@ -57,6 +56,8 @@ public class RegisterActivity extends AppCompatActivity {
                 final String phone = edtPhone.getText().toString();
                 final String email = edtEmail.getText().toString();
                 final String name = edtName.getText().toString();
+                final int verifyCode = customFunction.getVerifyCode();
+
                 if(!password.equals(chkPassword)){
                     Toast.makeText(RegisterActivity.this, "兩次輸入的密碼不一致！", Toast.LENGTH_SHORT).show();
                     return;
@@ -73,18 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
                         try {
                             progressDialog.dismiss();
                             JSONObject jsonObject = new JSONObject(response);
-                            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                            builder.setMessage("註冊完成!");
-                            builder.setTitle("Welcom");
-                            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                    RegisterActivity.this.startActivity(intent);
-                                }
-                            });
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
+                            String c_id = jsonObject.getString("C_Id");
+                            SendSMS(String.valueOf(verifyCode),c_id , jsonObject.getString("C_PhoneNum"));
 
 
                         } catch (JSONException e) {
@@ -117,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
                 };
 
                 RegisterRequest registerRequest = new RegisterRequest(account, password, name,
-                        phone, email, responseListener, errorListener);
+                        phone, email, verifyCode, responseListener, errorListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
 
@@ -125,6 +116,40 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public void SendSMS(final String code, final String c_id , String phone){
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    Intent intent = new Intent(RegisterActivity.this, VerifyActivity.class);
+                    intent.putExtra("c_id", c_id);
+                    RegisterActivity.this.startActivity(intent);
+                    finish();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                RegisterActivity.this.startActivity(intent);
+                finish();
+            }
+        };
+
+        SMSRequest smsRequest = new SMSRequest(code, phone, responseListener, errorListener);
+        RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+        queue.add(smsRequest);
 
     }
 
@@ -146,3 +171,5 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 }
+
+

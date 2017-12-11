@@ -58,14 +58,20 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                 intent.putExtra("phone", restaurant.getR_Phone());
                 intent.putExtra("address", restaurant.getR_Address());
                 intent.putExtra("imgPath", restaurant.getR_imgPath());
-
+                intent.putExtra("waitSwitch", restaurant.isWait_status());
+                intent.putExtra("openTime", restaurant.getR_OpenTime());
+                intent.putExtra("closeTime", restaurant.getR_CloseTime());
                 mActivity.startActivity(intent);
             }
         });
 
+        String path = restaurant.getR_imgPath();
+
         Glide.with(mActivity)
-                .load(restaurant.getR_imgPath())
+                .load(path)
                 .into(holder.img_Restaurant);
+
+
 
     }
 
@@ -90,6 +96,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             tvDistance = itemView.findViewById(R.id.tv_distance);
             linearLayout = itemView.findViewById(R.id.restaurant_list_constraint);
             img_Restaurant = itemView.findViewById(R.id.img_Restaurant);
+
 
         }
 

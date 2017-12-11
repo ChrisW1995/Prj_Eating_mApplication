@@ -1,5 +1,6 @@
 package com.example.chriswang.prj_eating2.Service;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
@@ -53,5 +54,24 @@ public class SharedPrefManager {
     public String getWaitNum() {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_WAIT_NUM, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_ACCESS_WAIT_NUM, null);
+    }
+
+    public boolean storeAccount(String account, String password, String c_id){
+        int mode = Activity.MODE_PRIVATE;
+        SharedPreferences mySharedPreferences;
+        mySharedPreferences = mContext.getSharedPreferences("eatingData", mode);
+        SharedPreferences.Editor editor = mySharedPreferences.edit();
+        editor.clear();
+        editor.putString("account", account);
+        editor.putString("password", password);
+        editor.putString("c_id", c_id);
+        editor.commit();
+
+        return true;
+    }
+
+    public String getC_Id(){
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("eatingData", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("c_id", null);
     }
 }

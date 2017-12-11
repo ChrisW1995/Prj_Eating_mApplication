@@ -2,7 +2,6 @@ package com.example.chriswang.prj_eating2;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.example.chriswang.prj_eating2.Request.AddWaitingRequest;
 import com.example.chriswang.prj_eating2.Service.CustomFunction;
 import com.example.chriswang.prj_eating2.Service.SharedPrefManager;
 

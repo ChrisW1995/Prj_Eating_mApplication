@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,62 +23,60 @@ import java.net.ConnectException;
  * Created by ChrisWang on 2017/11/10.
  */
 
-public class GPS_Service implements LocationListener {
-    Context context;
+public class GPS_Service extends Service {
 
-    public GPS_Service(Context context) {
-        this.context = context;
-    }
-
-    public GPS_Service() {
-    }
-
-    public Location getLocation(){
-        if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(context, "GPS not granted.", Toast.LENGTH_SHORT).show();
-            return null;
-        }
-
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-
-        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if(isGPSEnabled){
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
-            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            return location;
-        }else{
-            Toast.makeText(context, "確認ＧＰＳ定位功能是否開啟", Toast.LENGTH_SHORT).show();
-
-        }
+    private LocationListener listener;
+    private LocationManager locationManager;
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
         return null;
     }
 
-    public float getDistancBetweenTwoPoints(double lat1,double lon1,double lat2,double lon2) {
-
-        float[] distance = new float[2];
-
-        Location.distanceBetween( lat1, lon1,
-                lat2, lon2, distance);
-
-        return distance[0];
-    }
+    @SuppressLint("MissingPermission")
     @Override
-    public void onLocationChanged(Location location) {
+    public void onCreate() {
+        listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Intent i = new Intent("location_update");
+                i.putExtra("long", location.getLongitude());
+                i.putExtra("lat", location.getLatitude());
+                sendBroadcast(i);
+
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+            }
+        };
+
+        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 3000, 0, listener);
 
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
+    public void onDestroy() {
+        super.onDestroy();
+        if(locationManager != null) {
+            locationManager.removeUpdates(listener);
+        }
     }
 }
+
+

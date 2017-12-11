@@ -1,17 +1,22 @@
 package com.example.chriswang.prj_eating2;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
+import com.example.chriswang.prj_eating2.Service.CustomFunction;
 import com.example.chriswang.prj_eating2.Service.FCMIdService;
 import com.example.chriswang.prj_eating2.Service.GPS_Service;
 import com.example.chriswang.prj_eating2.Service.SharedPrefManager;
@@ -38,6 +44,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 /**
@@ -65,9 +74,8 @@ public class ListFragment extends Fragment {
     private RestaurantAdapter mRestaurantAdapter;
     private ArrayList<Restaurant> mRestaurantCollection;
     private PullRefreshLayout pullRefreshLayout;
-    private BroadcastReceiver broadcastReceiver;
-    private GPS_Service gps_service;
-    private double c_lat, c_lng;
+
+
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
     public ListFragment() {
@@ -105,6 +113,11 @@ public class ListFragment extends Fragment {
     }
 
     private void init(View v) {
+        CustomFunction customFunction = new CustomFunction();
+        if (!customFunction.isConnectingToInternet(getActivity())) {
+            Toast.makeText(getActivity(), "請檢察網路狀態是否正常", Toast.LENGTH_SHORT).show();
+            return;
+        }
         mRestaurantRecyclerView = v.findViewById(R.id.restaurant_recycler);
         mRestaurantRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRestaurantRecyclerView.setHasFixedSize(true);
@@ -112,17 +125,27 @@ public class ListFragment extends Fragment {
         mRestaurantAdapter = new RestaurantAdapter(mRestaurantCollection, getActivity());
         mRestaurantRecyclerView.setAdapter(mRestaurantAdapter);
 
+
     }
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            SharedPreferences mySharedPreferences;
+            mySharedPreferences = getActivity().getSharedPreferences("location", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mySharedPreferences.edit();
+            editor.putString("long", intent.getExtras().get("long").toString());
+            editor.putString("lat", intent.getExtras().get("lat").toString());
+            editor.apply();
+        }
+    };
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_list, container, false);
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
-        gps_service = new GPS_Service(getContext());
-        getGPS();
-
+        Intent i = new Intent(getActivity(), GPS_Service.class);
+        getActivity().startService(i);
 
         init(v);
         new FetchDataTask().execute();
@@ -130,7 +153,6 @@ public class ListFragment extends Fragment {
         pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getGPS();
                 init(v);
                 new FetchDataTask().execute();
                 pullRefreshLayout.setRefreshing(false);
@@ -143,27 +165,24 @@ public class ListFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Toast.makeText(getActivity(), SharedPrefManager.getmInstance(getContext()).getToken(),Toast.LENGTH_SHORT).show();
+    public void onDestroy() {
+        super.onDestroy();
 
-            }
-        };
-
-        Log.d(TAG, "onResume: "+SharedPrefManager.getmInstance(getContext()).getToken());
     }
 
-    public void getGPS(){
-
-        Location location = gps_service.getLocation();
-
-        if(location!=null){
-            c_lat = location.getLatitude();
-            c_lng = location.getLongitude();
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(broadcastReceiver != null){
+            getActivity().unregisterReceiver(broadcastReceiver);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getActivity().registerReceiver(broadcastReceiver, new IntentFilter("location_update"));
     }
 
 
@@ -181,13 +200,12 @@ public class ListFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            if(c_lat != 0){
 
-            }
         }
 
         getContext().registerReceiver(broadcastReceiver, new IntentFilter(FCMIdService.TOKEN_BROADCAST));
     }
+
 
     @Override
     public void onDetach() {
@@ -199,6 +217,8 @@ public class ListFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 
     public class FetchDataTask extends AsyncTask<Void, Void, Void>{
         private String mRemoteString;
@@ -220,6 +240,11 @@ public class ListFragment extends Fragment {
                 if(inputStream==null){
                     return null;
                 }
+                SharedPreferences mySharedPreferences;
+                mySharedPreferences = getActivity().getSharedPreferences("location", Activity.MODE_PRIVATE);
+
+                Double c_lng = Double.parseDouble(mySharedPreferences.getString("long", "0.0"));
+                Double c_lat = Double.parseDouble(mySharedPreferences.getString("lat", "0.0"));
 
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
@@ -236,7 +261,6 @@ public class ListFragment extends Fragment {
                 JSONArray restaurantsArray = new JSONArray(mRemoteString);
                 Log.v("Response", restaurantsArray.toString());
 
-
                 for (int i = 0; i < restaurantsArray.length(); i++){
                     String r_Name;
                     String r_Address;
@@ -246,10 +270,12 @@ public class ListFragment extends Fragment {
                     String r_DetailAddress;
                     String r_id;
                     String imgPath;
+                    String OpenTime, CloseTime;
+                    boolean wait_switch;
                     double distance;
                     double lat, lng;
 
-//                    JSONObject jRestaurant = (JSONObject)jsonObject.(i);
+//                   JSONObject jRestaurant = (JSONObject)jsonObject.(i);
                     r_Name = restaurantsArray.getJSONObject(i).getString("R_Name");
 
                     r_County = restaurantsArray.getJSONObject(i).getString("R_County");
@@ -260,13 +286,18 @@ public class ListFragment extends Fragment {
                     r_id = restaurantsArray.getJSONObject(i).getString("Id");
                     lat = restaurantsArray.getJSONObject(i).getDouble("Lat");
                     lng = restaurantsArray.getJSONObject(i).getDouble("Lng");
-                    distance = gps_service.getDistancBetweenTwoPoints(lat, lng, c_lat, c_lng);
-                    if(!restaurantsArray.getJSONObject(i).getString("ImagePath").isEmpty()){
-                        imgPath = restaurantsArray.getJSONObject(i).getString("ImagePath");
+                    OpenTime = restaurantsArray.getJSONObject(i).getString("StartTime");
+                    OpenTime = OpenTime.substring(0,OpenTime.lastIndexOf(':'));
+                    CloseTime = restaurantsArray.getJSONObject(i).getString("CloseTime");
+                    CloseTime = CloseTime.substring(0,CloseTime.lastIndexOf(':'));
+                    wait_switch = restaurantsArray.getJSONObject(i).getBoolean("WaitListSwitch");
+                    distance = getDistancBetweenTwoPoints(lat, lng, c_lat, c_lng);
+                    if(!restaurantsArray.getJSONObject(i).getString("ImagePath").equals("null")){
+                        imgPath = "http://cw30cmweb.com" + restaurantsArray.getJSONObject(i).getString("ImagePath");
 
                     }
                     else
-                        imgPath = "";
+                        imgPath = "http://cw30cmweb.com/Img/index.jpg";
 
                     Restaurant restaurant = new Restaurant();
                     restaurant.setR_Name(r_Name);
@@ -275,13 +306,23 @@ public class ListFragment extends Fragment {
                     restaurant.setR_id(r_id);
                     restaurant.setR_lat(lat);
                     restaurant.setR_lng(lng);
+                    restaurant.setWait_status(wait_switch);
+                    restaurant.setR_OpenTime(OpenTime);
+                    restaurant.setR_CloseTime(CloseTime);
                     DecimalFormat df = new DecimalFormat("##.00");
 
                     restaurant.setDistance(Double.parseDouble(df.format(distance/1000)));
-                    restaurant.setR_imgPath("http://pccu-eating.azurewebsites.net"+imgPath);
+                    restaurant.setR_imgPath(imgPath);
 
                     mRestaurantCollection.add(restaurant);
                 }
+                Collections.sort(mRestaurantCollection, new Comparator<Restaurant>() {
+                    public int compare(Restaurant o1, Restaurant o2) {
+                        double dis1 = o1.getDistance();
+                        double dis2= o2.getDistance();
+                        return Double.compare(dis1, dis2);
+                    }
+                });
 
 
             }catch (MalformedURLException e) {
@@ -305,6 +346,15 @@ public class ListFragment extends Fragment {
             return null;
         }
 
+        public float getDistancBetweenTwoPoints(double lat1,double lon1,double lat2,double lon2) {
+
+            float[] distance = new float[2];
+
+            Location.distanceBetween( lat1, lon1,
+                    lat2, lon2, distance);
+
+            return distance[0];
+        }
         @Override
         protected void onPostExecute(Void aVoid) {
             mRestaurantAdapter.notifyDataSetChanged();

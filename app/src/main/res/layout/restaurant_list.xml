@@ -18,10 +18,10 @@
         <ImageView
             android:id="@+id/img_Restaurant"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            app:srcCompat="@color/cardview_light_background" />
+            app:srcCompat="@android:color/background_light" />
 
         <TextView
             android:id="@+id/tvR_Name"
@@ -32,7 +32,7 @@
 
             android:text="Restaruant Name"
             android:textColor="#000"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <TextView
@@ -53,6 +53,12 @@
             android:layout_marginHorizontal="16dp"
             android:text="000000000"
             android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/linear_icon_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

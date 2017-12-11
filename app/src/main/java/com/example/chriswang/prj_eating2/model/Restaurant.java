@@ -1,5 +1,7 @@
 package com.example.chriswang.prj_eating2.model;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by ChrisWang on 2017/10/30.
  */
@@ -12,6 +14,7 @@ public class Restaurant {
     private String r_CloseTime;
     private String r_OpenTime;
     private String r_imgPath;
+    private boolean wait_switch;
     private double r_lat;
     private double r_lng;
     private double distance;
@@ -26,7 +29,7 @@ public class Restaurant {
     }
 
     public Restaurant(String r_Name, String r_Address, String r_Phone, String r_id,
-                      String r_OpenTime, String r_CloseTime, String r_imgPath) {
+                      String r_OpenTime, String r_CloseTime, String r_imgPath, boolean wait_switch) {
         this.r_Name = r_Name;
         this.r_Address = r_Address;
         this.r_Phone = r_Phone;
@@ -34,6 +37,7 @@ public class Restaurant {
         this.r_OpenTime = r_OpenTime;
         this.r_CloseTime = r_CloseTime;
         this.r_imgPath = r_imgPath;
+        this.wait_switch = wait_switch;
 
     }
 
@@ -45,6 +49,13 @@ public class Restaurant {
         this.distance = distance;
     }
 
+    public boolean isWait_status() {
+        return wait_switch;
+    }
+
+    public void setWait_status(boolean wait_status) {
+        this.wait_switch= wait_status;
+    }
 
     public double getR_lat() {
         return r_lat;
@@ -113,4 +124,6 @@ public class Restaurant {
     public void setR_Phone(String r_Phone) {
         this.r_Phone = r_Phone;
     }
+
+
 }
