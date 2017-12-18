@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity">
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,15 +34,23 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RegisterActivity"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:label="" />
-        <activity android:name=".RestaurantDetailActivity" />
-        <activity android:name=".WaitingActivity" />
+            android:label=""
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RestaurantDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WaitingActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".Service.MyFirebaseMessagingService">
             <intent-filter>
@@ -56,7 +66,12 @@
 
         <activity android:name=".ReserveActivity" />
         <activity android:name=".ReservationDetailActivity" />
-        <activity android:name=".VerifyActivity"></activity>
+        <activity android:name=".VerifyActivity" />
+        <activity android:name=".AddFeedbackActivity" />
+        <activity
+            android:name=".RestaurantInfoActivity"
+            android:label="@string/title_activity_restaurant_info"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -28,11 +28,12 @@ public class MainActivity extends AppCompatActivity {
                     transaction.replace(R.id.container, new ListFragment()).commit();
                     return true;
                 case R.id.navigation_dashboard:
+                    transaction.replace(R.id.container, new CouponFragment()).commit();
+                    return true;
+                case R.id.navigation_setting:
                     SettingFragment settingFragment = new SettingFragment();
                     transaction.replace(R.id.container, settingFragment).commit();
-                    return true;
-                case R.id.navigation_notifications:
-                    transaction.replace(R.id.container, new CouponFragment()).commit();
+
                     return true;
             }
             return false;

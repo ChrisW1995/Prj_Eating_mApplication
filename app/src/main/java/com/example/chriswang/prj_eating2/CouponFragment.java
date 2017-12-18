@@ -81,7 +81,7 @@ public class CouponFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            Toast.makeText(context, "Coupon", Toast.LENGTH_SHORT).show();
+
 
         }
     }

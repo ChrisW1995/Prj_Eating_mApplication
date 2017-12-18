@@ -18,6 +18,7 @@ public class Restaurant {
     private double r_lat;
     private double r_lng;
     private double distance;
+    private float score;
 
 
     public String getR_id() {
@@ -29,7 +30,7 @@ public class Restaurant {
     }
 
     public Restaurant(String r_Name, String r_Address, String r_Phone, String r_id,
-                      String r_OpenTime, String r_CloseTime, String r_imgPath, boolean wait_switch) {
+                      String r_OpenTime, String r_CloseTime, String r_imgPath,float score, boolean wait_switch) {
         this.r_Name = r_Name;
         this.r_Address = r_Address;
         this.r_Phone = r_Phone;
@@ -38,7 +39,16 @@ public class Restaurant {
         this.r_CloseTime = r_CloseTime;
         this.r_imgPath = r_imgPath;
         this.wait_switch = wait_switch;
+        this.score = score;
 
+    }
+
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
     }
 
     public double getDistance() {

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.chriswang.prj_eating2.R;
-import com.example.chriswang.prj_eating2.RestaurantDetailActivity;
+import com.example.chriswang.prj_eating2.RestaurantInfoActivity;
 import com.example.chriswang.prj_eating2.model.Restaurant;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mActivity, RestaurantDetailActivity.class);
+                Intent intent = new Intent(mActivity, RestaurantInfoActivity.class);
                 intent.putExtra("r_id", restaurant.getR_id());
                 intent.putExtra("name", restaurant.getR_Name());
                 intent.putExtra("phone", restaurant.getR_Phone());
@@ -61,6 +61,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                 intent.putExtra("waitSwitch", restaurant.isWait_status());
                 intent.putExtra("openTime", restaurant.getR_OpenTime());
                 intent.putExtra("closeTime", restaurant.getR_CloseTime());
+                intent.putExtra("score", restaurant.getScore());
                 mActivity.startActivity(intent);
             }
         });

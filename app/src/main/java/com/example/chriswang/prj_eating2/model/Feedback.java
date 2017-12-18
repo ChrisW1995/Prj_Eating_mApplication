@@ -6,20 +6,31 @@ package com.example.chriswang.prj_eating2.model;
 
 public class Feedback {
     private String r_id;
-    private String c_id;
+    private String C_Name;
     private String comment;
     private String commentTime;
-    private int rateNum;
+    private String title;
+    private float rateNum;
 
-    public Feedback(String r_id, String c_id, String comment, String commentTime, int rateNum) {
+    public Feedback(String r_id, String C_Name, String comment,
+                    String commentTime, int rateNum, String title) {
         this.r_id = r_id;
-        this.c_id = c_id;
+        this.C_Name = C_Name;
         this.comment = comment;
         this.commentTime = commentTime;
         this.rateNum = rateNum;
+        this.title = title;
     }
 
     public Feedback() {
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getR_id() {
@@ -30,12 +41,12 @@ public class Feedback {
         this.r_id = r_id;
     }
 
-    public String getC_id() {
-        return c_id;
+    public String getC_Name() {
+        return C_Name;
     }
 
-    public void setC_id(String c_id) {
-        this.c_id = c_id;
+    public void setC_Name(String C_Name) {
+        this.C_Name = C_Name;
     }
 
     public String getComment() {
@@ -54,11 +65,11 @@ public class Feedback {
         this.commentTime = commentTime;
     }
 
-    public int getRateNum() {
+    public float getRateNum() {
         return rateNum;
     }
 
-    public void setRateNum(int rateNum) {
+    public void setRateNum(float rateNum) {
         this.rateNum = rateNum;
     }
 }

@@ -274,6 +274,7 @@ public class ListFragment extends Fragment {
                     boolean wait_switch;
                     double distance;
                     double lat, lng;
+                    float score;
 
 //                   JSONObject jRestaurant = (JSONObject)jsonObject.(i);
                     r_Name = restaurantsArray.getJSONObject(i).getString("R_Name");
@@ -286,6 +287,7 @@ public class ListFragment extends Fragment {
                     r_id = restaurantsArray.getJSONObject(i).getString("Id");
                     lat = restaurantsArray.getJSONObject(i).getDouble("Lat");
                     lng = restaurantsArray.getJSONObject(i).getDouble("Lng");
+                    score = Float.parseFloat(restaurantsArray.getJSONObject(i).getString("Score"));
                     OpenTime = restaurantsArray.getJSONObject(i).getString("StartTime");
                     OpenTime = OpenTime.substring(0,OpenTime.lastIndexOf(':'));
                     CloseTime = restaurantsArray.getJSONObject(i).getString("CloseTime");
@@ -306,6 +308,7 @@ public class ListFragment extends Fragment {
                     restaurant.setR_id(r_id);
                     restaurant.setR_lat(lat);
                     restaurant.setR_lng(lng);
+                    restaurant.setScore(score);
                     restaurant.setWait_status(wait_switch);
                     restaurant.setR_OpenTime(OpenTime);
                     restaurant.setR_CloseTime(CloseTime);

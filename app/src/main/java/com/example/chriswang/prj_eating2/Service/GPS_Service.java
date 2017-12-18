@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -27,6 +28,8 @@ public class GPS_Service extends Service {
 
     private LocationListener listener;
     private LocationManager locationManager;
+    private Location location;
+    private String bestProvider = LocationManager.GPS_PROVIDER;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -39,11 +42,7 @@ public class GPS_Service extends Service {
         listener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Intent i = new Intent("location_update");
-                i.putExtra("long", location.getLongitude());
-                i.putExtra("lat", location.getLatitude());
-                sendBroadcast(i);
-
+                getLocation(location);
 
             }
 
@@ -66,10 +65,32 @@ public class GPS_Service extends Service {
         };
 
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 3000, 0, listener);
 
+        locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 3000, 0, listener);
+        locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER, 0, 0, listener);
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ) {
+            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);  //使用GPS定位座標
+        }
+        else if ( locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+        {
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
+        getLocation(location);
     }
 
+    public void getLocation(Location location){
+
+        if(location != null) {
+            Intent i = new Intent("location_update");
+            i.putExtra("long", location.getLongitude());
+            i.putExtra("lat", location.getLatitude());
+            sendBroadcast(i);
+        }
+        else {
+            Toast.makeText(this, "無法定位座標", Toast.LENGTH_LONG).show();
+        }
+
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -77,6 +98,7 @@ public class GPS_Service extends Service {
             locationManager.removeUpdates(listener);
         }
     }
+
 }
 
 
