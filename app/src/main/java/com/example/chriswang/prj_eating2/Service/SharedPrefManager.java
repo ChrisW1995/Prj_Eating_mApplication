@@ -12,9 +12,11 @@ import android.support.v4.content.ContextCompat;
 public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "fcmsharedpref";
     private static final String SHARED_WAIT_NUM = "waitnum";
+    private static final String SHARED_RESTAURANT_LIST = "r_list";
 
     private static final String KEY_ACCESS_TOKEN = "token";
     private static final String KEY_ACCESS_WAIT_NUM = "waitnum";
+    private static final String KEY_ACCESS_R_LIST = "list";
 
     private static Context mContext;
     private static SharedPrefManager mInstance;
@@ -73,5 +75,18 @@ public class SharedPrefManager {
     public String getC_Id(){
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("eatingData", Context.MODE_PRIVATE);
         return sharedPreferences.getString("c_id", null);
+    }
+
+    public boolean storeRestaurantList(String r_str){
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_RESTAURANT_LIST, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_ACCESS_R_LIST, r_str);
+        editor.apply();
+        return true;
+    }
+
+    public String getRestaurantList(){
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_RESTAURANT_LIST, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_ACCESS_R_LIST, null);
     }
 }

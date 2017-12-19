@@ -87,7 +87,6 @@ public class GPS_Service extends Service {
             sendBroadcast(i);
         }
         else {
-            Toast.makeText(this, "無法定位座標", Toast.LENGTH_LONG).show();
         }
 
     }

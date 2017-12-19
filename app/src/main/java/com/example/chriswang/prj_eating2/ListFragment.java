@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
@@ -74,7 +75,9 @@ public class ListFragment extends Fragment {
     private RestaurantAdapter mRestaurantAdapter;
     private ArrayList<Restaurant> mRestaurantCollection;
     private PullRefreshLayout pullRefreshLayout;
-
+    SharedPreferences mySharedPreferences;
+    private FetchDataTask fetchDataTask;
+    private ProgressBar mProgressBar;
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
@@ -82,14 +85,7 @@ public class ListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static ListFragment newInstance(String param1, String param2) {
         ListFragment fragment = new ListFragment();
@@ -119,11 +115,13 @@ public class ListFragment extends Fragment {
             return;
         }
         mRestaurantRecyclerView = v.findViewById(R.id.restaurant_recycler);
+        mProgressBar = v.findViewById(R.id.progress_bar);
         mRestaurantRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRestaurantRecyclerView.setHasFixedSize(true);
         mRestaurantCollection = new ArrayList<>();
         mRestaurantAdapter = new RestaurantAdapter(mRestaurantCollection, getActivity());
         mRestaurantRecyclerView.setAdapter(mRestaurantAdapter);
+        fetchDataTask = new FetchDataTask();
 
 
     }
@@ -148,17 +146,21 @@ public class ListFragment extends Fragment {
         getActivity().startService(i);
 
         init(v);
-        new FetchDataTask().execute();
-        pullRefreshLayout = v.findViewById(R.id.swipeRefreshLayout);
-        pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                init(v);
-                new FetchDataTask().execute();
-                pullRefreshLayout.setRefreshing(false);
-                
-            }
-        });
+        if(isAdded()){
+            fetchDataTask.execute();
+            pullRefreshLayout = v.findViewById(R.id.swipeRefreshLayout);
+            pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    init(v);
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    fetchDataTask.execute();
+                    pullRefreshLayout.setRefreshing(false);
+
+                }
+            });
+        }
+
         
 
         return v;
@@ -173,6 +175,11 @@ public class ListFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        if(fetchDataTask != null){
+            fetchDataTask.cancel(true);
+            fetchDataTask = null;
+        }
+
         if(broadcastReceiver != null){
             getActivity().unregisterReceiver(broadcastReceiver);
         }
@@ -186,14 +193,6 @@ public class ListFragment extends Fragment {
     }
 
 
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -202,7 +201,6 @@ public class ListFragment extends Fragment {
         } else {
 
         }
-
         getContext().registerReceiver(broadcastReceiver, new IntentFilter(FCMIdService.TOKEN_BROADCAST));
     }
 
@@ -226,22 +224,23 @@ public class ListFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             HttpURLConnection urlConnection =null;
             BufferedReader reader = null;
+            InputStream inputStream = null;
             Uri uri = Uri.parse(getString(R.string.restaurant_list_api));
             URL url;
             try{
+                mySharedPreferences = getActivity().getSharedPreferences("location", Activity.MODE_PRIVATE);
                 url = new URL(uri.toString());
                 urlConnection = (HttpURLConnection)url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 
-                InputStream inputStream = urlConnection.getInputStream();
+                inputStream = urlConnection.getInputStream();
                 StringBuffer buffer = new StringBuffer();
 
                 if(inputStream==null){
                     return null;
                 }
-                SharedPreferences mySharedPreferences;
-                mySharedPreferences = getActivity().getSharedPreferences("location", Activity.MODE_PRIVATE);
+
 
                 Double c_lng = Double.parseDouble(mySharedPreferences.getString("long", "0.0"));
                 Double c_lat = Double.parseDouble(mySharedPreferences.getString("lat", "0.0"));
@@ -253,15 +252,24 @@ public class ListFragment extends Fragment {
                 }
 
                 if(buffer.length()==0){
+
                     return null;
                 }
 
                 mRemoteString = buffer.toString();
+                SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
+                sharedPrefManager.storeRestaurantList(mRemoteString);
+
 //                JSONObject jsonObject = new JSONObject(mRemoteString);
                 JSONArray restaurantsArray = new JSONArray(mRemoteString);
                 Log.v("Response", restaurantsArray.toString());
 
                 for (int i = 0; i < restaurantsArray.length(); i++){
+
+                    if(isCancelled()){
+                        Log.d("GetRestaurant", "Stop Get ");
+                        break;
+                    }
                     String r_Name;
                     String r_Address;
                     String r_Phone;
@@ -338,6 +346,13 @@ public class ListFragment extends Fragment {
                 if (urlConnection != null) {
                     urlConnection.disconnect();
                 }
+                if(inputStream!=null){
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 if (reader != null) {
                     try {
                         reader.close();
@@ -360,7 +375,11 @@ public class ListFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(Void aVoid) {
-            mRestaurantAdapter.notifyDataSetChanged();
+                mRestaurantAdapter.notifyDataSetChanged();
+                mRestaurantRecyclerView.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.GONE);
+
+
         }
     }
 }

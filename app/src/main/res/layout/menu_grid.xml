@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:layout_width="200dp"
-    android:layout_height="200dp"
-    android:layout_margin="2dp">
+    android:layout_width="match_parent"
+    android:layout_height="190dp"
+    android:layout_margin="0dp"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/img_menu"
@@ -29,8 +29,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textColor="#FFF"
         android:textColorHighlight="@android:color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
+        android:layout_marginRight="5dp"
         app:layout_constraintEnd_toEndOf="@+id/img_menu"
         tools:layout_editor_absoluteY="63dp" />
 

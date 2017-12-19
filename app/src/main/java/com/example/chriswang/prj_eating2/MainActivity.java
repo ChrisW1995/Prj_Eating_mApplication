@@ -25,15 +25,15 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+
                     transaction.replace(R.id.container, new ListFragment()).commit();
                     return true;
-                case R.id.navigation_dashboard:
-                    transaction.replace(R.id.container, new CouponFragment()).commit();
+                case R.id.navigation_search:
+                    transaction.replace(R.id.container, new SearchFragment()).commit();
                     return true;
                 case R.id.navigation_setting:
                     SettingFragment settingFragment = new SettingFragment();
                     transaction.replace(R.id.container, settingFragment).commit();
-
                     return true;
             }
             return false;

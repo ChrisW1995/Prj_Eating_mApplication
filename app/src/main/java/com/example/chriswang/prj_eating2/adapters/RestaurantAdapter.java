@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -48,7 +49,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.setTvR_Address("地址：" + restaurant.getR_Address());
         holder.setTvR_Phone("電話："+ restaurant.getR_Phone());
         holder.setTvDistnce(String.valueOf(restaurant.getDistance()));
-
+        holder.setRating(restaurant.getScore());
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +88,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         TextView tvR_Name, tvR_Address, tvR_Phone, tvDistance;
         ImageView img_Restaurant;
+        RatingBar restaurant_rating;
         private LinearLayout linearLayout;
         public RestaurantHolder(View itemView) {
             super(itemView);
@@ -97,9 +99,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             tvDistance = itemView.findViewById(R.id.tv_distance);
             linearLayout = itemView.findViewById(R.id.restaurant_list_constraint);
             img_Restaurant = itemView.findViewById(R.id.img_Restaurant);
-
+            restaurant_rating = itemView.findViewById(R.id.restaurant_ratingBar);
 
         }
+
+        public void setRating(float rating){this.restaurant_rating.setRating(rating);}
 
         public void setTvDistnce(String tvDistnce){this.tvDistance.setText(tvDistnce+"km");}
 

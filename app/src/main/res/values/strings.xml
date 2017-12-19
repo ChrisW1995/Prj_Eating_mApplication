@@ -14,9 +14,10 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="google_maps_key">AIzaSyCk6jWnTfDNWx-iNwUOmA_oePtLQ7WkBu0</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">餐廳列表</string>
-    <string name="title_dashboard">優惠券</string>
+    <string name="title_search">搜尋</string>
     <string name="title_info">訂/候資訊</string>
     <string name="title_notifications">個人設定</string>
     <string name="account">登入帳號</string>
