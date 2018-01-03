@@ -11,10 +11,8 @@ import android.util.Log;
 import com.example.chriswang.prj_eating2.R;
 import com.example.chriswang.prj_eating2.adapters.CouponAdapter;
 import com.example.chriswang.prj_eating2.model.Coupon;
-import com.example.chriswang.prj_eating2.model.Feedback;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +26,7 @@ import java.util.ArrayList;
  * Created by ChrisWang on 2017/12/20.
  */
 
-public class FetchRestaurantCoupons extends AsyncTask<Object, Void, Void> {
+public class FetchCustomerCoupons extends AsyncTask<Object, Void, Void> {
     Context mContext;
     Activity mActivity;
     String r_id;
@@ -37,9 +35,8 @@ public class FetchRestaurantCoupons extends AsyncTask<Object, Void, Void> {
     private CouponAdapter mCouponAdapter;
     private ArrayList<Coupon> mCoupons;
     private RecyclerView mCouponRecycler;
-    public FetchRestaurantCoupons(Context mContext, String r_id, Activity mActivity) {
+    public FetchCustomerCoupons(Context mContext, Activity mActivity) {
         this.mContext = mContext;
-        this.r_id = r_id;
         this.mActivity = mActivity;
     }
 
@@ -53,7 +50,7 @@ public class FetchRestaurantCoupons extends AsyncTask<Object, Void, Void> {
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
-        Uri uri = Uri.parse(mContext.getString(R.string.get_r_coupon_api) + r_id + "/" + c_id);
+        Uri uri = Uri.parse(mContext.getString(R.string.get_received_coupon_api) + c_id);
         URL url;
         try {
             url = new URL(uri.toString());

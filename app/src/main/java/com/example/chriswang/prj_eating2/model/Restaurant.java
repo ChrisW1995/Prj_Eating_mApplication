@@ -19,6 +19,8 @@ public class Restaurant {
     private double r_lng;
     private double distance;
     private float score;
+    private boolean exist_coupon;
+    private int waitNum;
 
 
     public String getR_id() {
@@ -41,6 +43,22 @@ public class Restaurant {
         this.wait_switch = wait_switch;
         this.score = score;
 
+    }
+
+    public boolean isExist_coupon() {
+        return exist_coupon;
+    }
+
+    public int getWaitNum() {
+        return waitNum;
+    }
+
+    public void setWaitNum(int waitNum) {
+        this.waitNum = waitNum;
+    }
+
+    public void setExist_coupon(boolean exist_coupon) {
+        this.exist_coupon = exist_coupon;
     }
 
     public float getScore() {

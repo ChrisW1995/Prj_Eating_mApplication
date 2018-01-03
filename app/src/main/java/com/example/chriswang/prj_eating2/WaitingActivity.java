@@ -42,7 +42,7 @@ public class WaitingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_waiting);
         btnWaitingCommit = findViewById(R.id.btnWaitingCommit);
         edtWaitingDetail = findViewById(R.id.edtWaitingDetail);
-        tvCurrentNum = findViewById(R.id.tv_current_waiting_num);
+
         spinnerNum = findViewById(R.id.spin_wait_people_num);
         customFunction = new CustomFunction();
 

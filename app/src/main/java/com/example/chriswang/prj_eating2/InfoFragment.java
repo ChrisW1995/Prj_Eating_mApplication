@@ -51,11 +51,11 @@ public class InfoFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private TextView tv_Name, tv_Address, tv_Phone,tv_Time,tv_avg_score,
-            tv_go_add_feedback;
+            tv_go_add_feedback, tv_wait_num;
     private String r_id;
     private ImageView imgDetailImg;
-    private Button btnReserve, btnWaiting;
-    private boolean waitSwitch;
+    private Button btnReserve, btnWaiting, btnCoupon;
+    private boolean waitSwitch, coupon;
     private ArrayList<Feedback> mFeedback;
     private FeedbackAdapter mFeedbackAdapter;
     private RecyclerView mFeedbackRecycler;
@@ -63,7 +63,9 @@ public class InfoFragment extends Fragment {
     private RatingBar ratingBar;
     private float score;
 
+    private FetchCommentTask fetchCommentTask;
 
+    private int waitNum;
     private String id="", comment="", title="", rating="";
 
     // TODO: Rename and change types of parameters
@@ -103,6 +105,14 @@ public class InfoFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(fetchCommentTask!=null){
+           fetchCommentTask.cancel(true);
+        }
+    }
+
     public void init(View v){
         mFeedbackRecycler = v.findViewById(R.id.feedback_recycler);
         RecyclerView.LayoutManager linearLayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -116,6 +126,7 @@ public class InfoFragment extends Fragment {
         sharedPrefManager = new SharedPrefManager(getContext());
         r_id = getActivity().getIntent().getStringExtra("r_id");
         tv_Name = v.findViewById(R.id.tv_DetailName);
+        tv_wait_num = v.findViewById(R.id.tv_wait_num);
         tv_Address = v.findViewById(R.id.tv_DetailAddr);
         tv_Phone = v.findViewById(R.id.tv_DetailPhone);
         tv_Time = v.findViewById(R.id.tv_R_Time);
@@ -123,10 +134,14 @@ public class InfoFragment extends Fragment {
         imgDetailImg = v.findViewById(R.id.img_DetailImg);
         btnReserve = v.findViewById(R.id.btnReserve);
         btnWaiting = v.findViewById(R.id.btnWaiting);
+        btnCoupon = v.findViewById(R.id.btn_coupon);
         tv_avg_score = v.findViewById(R.id.tv_avg_score);
         ratingBar = v.findViewById(R.id.r_detail_rating);
 
+        waitNum = getActivity().getIntent().getIntExtra("waitNum",0);
+
         waitSwitch = getActivity().getIntent().getBooleanExtra("waitSwitch", false);
+        coupon = getActivity().getIntent().getBooleanExtra("coupon", false);
         String _R_name = getActivity().getIntent().getStringExtra("name");
         tv_Name.setText(getActivity().getIntent().getStringExtra("name"));
         tv_Address.setText("餐廳地址："+ getActivity().getIntent().getStringExtra("address"));
@@ -136,6 +151,7 @@ public class InfoFragment extends Fragment {
                 getActivity().getIntent().getStringExtra("closeTime")));
         score = getActivity().getIntent().getFloatExtra("score", 0);
         tv_avg_score.setText(String.valueOf(score));
+        tv_wait_num.setText("目前候位組數："+waitNum);
         ratingBar.setRating(score);
         Glide.with(this)
                 .load(getActivity().getIntent().getStringExtra("imgPath"))
@@ -155,6 +171,18 @@ public class InfoFragment extends Fragment {
             Drawable drawable = this.getResources().getDrawable(R.drawable.background_btn_gray);
             btnWaiting.setEnabled(false);
             btnWaiting.setBackground(drawable);
+        }
+        if(coupon){
+            btnCoupon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }else{
+            Drawable drawable = this.getResources().getDrawable(R.drawable.background_btn_gray);
+            btnCoupon.setEnabled(false);
+            btnCoupon.setBackground(drawable);
         }
 
 
@@ -182,6 +210,14 @@ public class InfoFragment extends Fragment {
             }
         });
 
+        btnCoupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), CouponActivity.class);
+                i.putExtra("r_id", r_id);
+                startActivity(i);
+            }
+        });
         mListener.onFragmentInteraction(this.r_id);
 
 
@@ -192,7 +228,10 @@ public class InfoFragment extends Fragment {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_info, container, false);
         init(v);
-        new FetchCommentTask().execute();
+        if(isAdded()){
+           fetchCommentTask = new FetchCommentTask();
+           fetchCommentTask.execute();
+        }
         return v;
     }
 
@@ -298,6 +337,9 @@ public class InfoFragment extends Fragment {
                     String _title;
                     int rateNum;
 
+                    if(isCancelled()){
+                        fetchCommentTask = null;
+                    }
                     _title = contentArray.getJSONObject(i).getString("Title");
                     comment = contentArray.getJSONObject(i).getString("Comment");
                     commentTime = contentArray.getJSONObject(i).getString("CommentTime");
@@ -306,6 +348,8 @@ public class InfoFragment extends Fragment {
                     rateNum = contentArray.getJSONObject(i).getInt("Rating");
                     if(comment.equals("null"))
                         comment="";
+                    if(_title.equals("null"))
+                        _title = "";
                     Feedback feedback = new Feedback();
                     feedback.setTitle(_title);
                     feedback.setC_Name(C_Name);
@@ -338,7 +382,10 @@ public class InfoFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(Void aVoid) {
-            mFeedbackAdapter.notifyDataSetChanged();
+            if(isAdded()){
+                mFeedbackAdapter.notifyDataSetChanged();
+            }
+
         }
     }
 

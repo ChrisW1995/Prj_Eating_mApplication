@@ -19,29 +19,38 @@
             android:id="@+id/img_Restaurant"
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:layout_weight="1"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             app:srcCompat="@android:color/background_light" />
 
-        <TextView
-            android:id="@+id/tvR_Name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            android:text="Restaruant Name"
-            android:textColor="#000"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvR_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="18dp"
+                android:layout_marginTop="10dp"
+
+                android:layout_weight="1"
+                android:text="Restaruant Name"
+                android:textColor="#000"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvR_Address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
+            android:layout_marginHorizontal="18sp"
+            android:layout_marginTop="8dp"
             android:text="address"
             android:textSize="16sp" />
 
@@ -50,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="18sp"
             android:text="000000000"
             android:textSize="16sp" />
 
@@ -78,20 +87,39 @@
             <TextView
                 android:id="@+id/tv_distance"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
-                android:textSize="16sp"
-                android:text="0.00km " />
+                android:layout_weight="1"
+                android:text="0.00km "
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/img_sale"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="0"
+                android:paddingBottom="3dp"
+                app:srcCompat="@mipmap/no_sale" />
+
+            <ImageView
+                android:id="@+id/img_wait"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="0"
+                android:paddingBottom="3dp"
+                app:srcCompat="@drawable/ic_wating" />
 
             <RatingBar
                 android:id="@+id/restaurant_ratingBar"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0"
                 android:numStars="5"
+                android:paddingTop="3dp"
                 android:stepSize="0.1" />
 
         </LinearLayout>

@@ -60,9 +60,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                 intent.putExtra("address", restaurant.getR_Address());
                 intent.putExtra("imgPath", restaurant.getR_imgPath());
                 intent.putExtra("waitSwitch", restaurant.isWait_status());
+                intent.putExtra("coupon", restaurant.isExist_coupon());
                 intent.putExtra("openTime", restaurant.getR_OpenTime());
                 intent.putExtra("closeTime", restaurant.getR_CloseTime());
                 intent.putExtra("score", restaurant.getScore());
+                intent.putExtra("waitNum", restaurant.getWaitNum());
                 mActivity.startActivity(intent);
             }
         });
@@ -72,6 +74,17 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         Glide.with(mActivity)
                 .load(path)
                 .into(holder.img_Restaurant);
+
+        if(restaurant.isWait_status()){
+            holder.setImg_wait(R.mipmap.iswaiting_blue);
+        }else {
+            holder.setImg_wait(R.mipmap.no_waiting);
+        }
+        if(restaurant.isExist_coupon()){
+            holder.setImg_sale(R.mipmap.is_sale_orange);
+        }else {
+            holder.setImg_sale(R.mipmap.no_sale);
+        }
 
 
 
@@ -87,8 +100,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     public class RestaurantHolder extends RecyclerView.ViewHolder{
 
         TextView tvR_Name, tvR_Address, tvR_Phone, tvDistance;
-        ImageView img_Restaurant;
+        ImageView img_Restaurant, img_wait, img_sale;
         RatingBar restaurant_rating;
+
         private LinearLayout linearLayout;
         public RestaurantHolder(View itemView) {
             super(itemView);
@@ -99,8 +113,17 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             tvDistance = itemView.findViewById(R.id.tv_distance);
             linearLayout = itemView.findViewById(R.id.restaurant_list_constraint);
             img_Restaurant = itemView.findViewById(R.id.img_Restaurant);
+            img_wait = itemView.findViewById(R.id.img_wait);
+            img_sale = itemView.findViewById(R.id.img_sale);
             restaurant_rating = itemView.findViewById(R.id.restaurant_ratingBar);
 
+        }
+        public void setImg_sale(int img_sale) {
+            this.img_sale.setImageResource(img_sale);
+        }
+
+        public void setImg_wait(int img_wait) {
+            this.img_wait.setImageResource(img_wait);
         }
 
         public void setRating(float rating){this.restaurant_rating.setRating(rating);}

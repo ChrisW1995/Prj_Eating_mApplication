@@ -12,11 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="預計人數"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_current_waiting_num" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_WaitName" />
 
     <Spinner
         android:id="@+id/spin_wait_people_num"
@@ -90,6 +90,7 @@
         android:id="@+id/btnWaitingCommit"
         android:layout_width="177dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
@@ -97,29 +98,16 @@
         android:text="確定候位"
         android:textColor="@android:color/white"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtWaitingDetail" />
-
-    <TextView
-        android:id="@+id/tv_current_waiting_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:text="目前等候人數：0"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_WaitName" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="387dp"
         android:layout_height="173dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"

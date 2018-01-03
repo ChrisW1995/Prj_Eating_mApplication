@@ -35,6 +35,7 @@ import com.example.chriswang.prj_eating2.adapters.RestaurantAdapter;
 import com.example.chriswang.prj_eating2.model.Restaurant;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -78,6 +79,7 @@ public class ListFragment extends Fragment {
     SharedPreferences mySharedPreferences;
     private FetchDataTask fetchDataTask;
     private ProgressBar mProgressBar;
+    private SharedPrefManager sharedPrefManager;
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
@@ -114,6 +116,7 @@ public class ListFragment extends Fragment {
             Toast.makeText(getActivity(), "請檢察網路狀態是否正常", Toast.LENGTH_SHORT).show();
             return;
         }
+        sharedPrefManager = new SharedPrefManager(getContext());
         mRestaurantRecyclerView = v.findViewById(R.id.restaurant_recycler);
         mProgressBar = v.findViewById(R.id.progress_bar);
         mRestaurantRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -121,7 +124,7 @@ public class ListFragment extends Fragment {
         mRestaurantCollection = new ArrayList<>();
         mRestaurantAdapter = new RestaurantAdapter(mRestaurantCollection, getActivity());
         mRestaurantRecyclerView.setAdapter(mRestaurantAdapter);
-        fetchDataTask = new FetchDataTask();
+
 
 
     }
@@ -134,6 +137,7 @@ public class ListFragment extends Fragment {
             editor.putString("long", intent.getExtras().get("long").toString());
             editor.putString("lat", intent.getExtras().get("lat").toString());
             editor.apply();
+
         }
     };
 
@@ -147,13 +151,21 @@ public class ListFragment extends Fragment {
 
         init(v);
         if(isAdded()){
+            fetchDataTask = new FetchDataTask();
             fetchDataTask.execute();
             pullRefreshLayout = v.findViewById(R.id.swipeRefreshLayout);
             pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
+                    mRestaurantCollection= null;
                     init(v);
                     mProgressBar.setVisibility(View.VISIBLE);
+                    if(fetchDataTask != null){
+                        fetchDataTask.cancel(true);
+                        fetchDataTask = null;
+                    }
+
+                    fetchDataTask = new FetchDataTask();
                     fetchDataTask.execute();
                     pullRefreshLayout.setRefreshing(false);
 
@@ -179,7 +191,6 @@ public class ListFragment extends Fragment {
             fetchDataTask.cancel(true);
             fetchDataTask = null;
         }
-
         if(broadcastReceiver != null){
             getActivity().unregisterReceiver(broadcastReceiver);
         }
@@ -190,6 +201,13 @@ public class ListFragment extends Fragment {
         super.onResume();
 
         getActivity().registerReceiver(broadcastReceiver, new IntentFilter("location_update"));
+        if(isAdded()){
+            if(fetchDataTask != null){
+                fetchDataTask = null;
+            }
+            fetchDataTask = new FetchDataTask();
+
+        }
     }
 
 
@@ -199,6 +217,14 @@ public class ListFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
+
+        }
+        CustomFunction customFunction=new CustomFunction();
+        if(!customFunction.isConnectingToInternet(getActivity())){
+            Toast.makeText(getActivity(), "請確認網路連線是否正常", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(getActivity(), LoginActivity.class);
+            startActivity(i);
+            getActivity().finish();
 
         }
         getContext().registerReceiver(broadcastReceiver, new IntentFilter(FCMIdService.TOKEN_BROADCAST));
@@ -257,19 +283,13 @@ public class ListFragment extends Fragment {
                 }
 
                 mRemoteString = buffer.toString();
-                SharedPrefManager sharedPrefManager = new SharedPrefManager(getContext());
                 sharedPrefManager.storeRestaurantList(mRemoteString);
 
-//                JSONObject jsonObject = new JSONObject(mRemoteString);
                 JSONArray restaurantsArray = new JSONArray(mRemoteString);
                 Log.v("Response", restaurantsArray.toString());
 
                 for (int i = 0; i < restaurantsArray.length(); i++){
 
-                    if(isCancelled()){
-                        Log.d("GetRestaurant", "Stop Get ");
-                        break;
-                    }
                     String r_Name;
                     String r_Address;
                     String r_Phone;
@@ -279,10 +299,16 @@ public class ListFragment extends Fragment {
                     String r_id;
                     String imgPath;
                     String OpenTime, CloseTime;
-                    boolean wait_switch;
+                    boolean wait_switch, exist_coupon;
                     double distance;
                     double lat, lng;
                     float score;
+                    int waitNum;
+
+                    if(isCancelled()){
+                        Log.d("GetRestaurant", "Stop Get ");
+                        break;
+                    }
 
 //                   JSONObject jRestaurant = (JSONObject)jsonObject.(i);
                     r_Name = restaurantsArray.getJSONObject(i).getString("R_Name");
@@ -301,6 +327,8 @@ public class ListFragment extends Fragment {
                     CloseTime = restaurantsArray.getJSONObject(i).getString("CloseTime");
                     CloseTime = CloseTime.substring(0,CloseTime.lastIndexOf(':'));
                     wait_switch = restaurantsArray.getJSONObject(i).getBoolean("WaitListSwitch");
+                    exist_coupon = restaurantsArray.getJSONObject(i).getBoolean("ExistCoupon");
+                    waitNum = restaurantsArray.getJSONObject(i).getInt("WaitNum");
                     distance = getDistancBetweenTwoPoints(lat, lng, c_lat, c_lng);
                     if(!restaurantsArray.getJSONObject(i).getString("ImagePath").equals("null")){
                         imgPath = "http://cw30cmweb.com" + restaurantsArray.getJSONObject(i).getString("ImagePath");
@@ -318,8 +346,10 @@ public class ListFragment extends Fragment {
                     restaurant.setR_lng(lng);
                     restaurant.setScore(score);
                     restaurant.setWait_status(wait_switch);
+                    restaurant.setExist_coupon(exist_coupon);
                     restaurant.setR_OpenTime(OpenTime);
                     restaurant.setR_CloseTime(CloseTime);
+                    restaurant.setWaitNum(waitNum);
                     DecimalFormat df = new DecimalFormat("##.00");
 
                     restaurant.setDistance(Double.parseDouble(df.format(distance/1000)));
@@ -375,11 +405,12 @@ public class ListFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(Void aVoid) {
+            if(isAdded()){
                 mRestaurantAdapter.notifyDataSetChanged();
                 mRestaurantRecyclerView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
 
-
+            }
         }
     }
 }

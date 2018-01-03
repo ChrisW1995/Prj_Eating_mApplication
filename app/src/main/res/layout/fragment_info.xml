@@ -71,11 +71,20 @@
                 android:layout_marginHorizontal="8dp"/>
 
             <TextView
+                android:id="@+id/tv_wait_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="11dp"
+                android:padding="4dp"
+                android:text="目前等候人數："
+                android:textAlignment="center"
+                android:textSize="16sp" />
+            <TextView
                 android:id="@+id/tv_DetailAddr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:layout_marginHorizontal="10dp"
+                android:padding="5dp"
                 android:paddingVertical="2dp"
                 android:text="TextView"
                 android:textSize="18sp" />
@@ -132,6 +141,18 @@
                     android:textSize="20sp" />
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/background_login_two"
+                android:padding="10dp"
+                android:text="優惠訊息"
+                android:textColor="#FFF"
+                android:textSize="20sp" />
 
             <TableRow
                 android:id="@+id/hr"

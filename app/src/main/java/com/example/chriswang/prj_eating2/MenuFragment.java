@@ -45,7 +45,7 @@ public class MenuFragment extends Fragment implements InfoFragment.OnFragmentInt
     private String mParam1;
     private String mParam2;
     private static String r_id;
-
+    private FetchMenuTask menuTask;
     private ArrayList<Menu> mMenu;
     private MenuAdapter mMenuAdapter;
     private RecyclerView mMenuRecycler;
@@ -75,6 +75,14 @@ public class MenuFragment extends Fragment implements InfoFragment.OnFragmentInt
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        if(menuTask!=null){
+            menuTask.cancel(true);
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -99,8 +107,13 @@ public class MenuFragment extends Fragment implements InfoFragment.OnFragmentInt
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_menu, container, false);
-        init(v);
-        new FetchMenuTask().execute();
+
+        if(isAdded()){
+            init(v);
+            menuTask = new FetchMenuTask();
+            menuTask.execute();
+        }
+
         return v;
     }
 
@@ -156,6 +169,10 @@ public class MenuFragment extends Fragment implements InfoFragment.OnFragmentInt
                 Log.v("menu response", menuArray.toString());
 
                 for (int i = 0; i < menuArray.length(); i++) {
+                    if(isCancelled()){
+                        menuTask=null;
+
+                    }
                     String menu_name;
                     String menu_path;
 

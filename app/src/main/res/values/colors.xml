@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ed999a</color>
+    <color name="colorPrimary">#ff6a72</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff6096</color>
     <color name="front_background">#ffffff</color>
-    <color name="EatingMain">#f08f90</color>
+    <color name="EatingMain">#ff9fa0</color>
     <color name="listBack">#FFF</color>
     <color name="listText">#515151</color>
-    <color name="bottom_view_color">#F08F90</color>
+    <color name="bottom_view_color">#fffefe</color>
 </resources>

@@ -111,7 +111,7 @@ public class GetPlacesOnMap extends AsyncTask<Object, String, String> implements
                     r_Phone="", r_Address="", r_DetailAddress="",
                     r_id="", r_ImgPath="", OpenTime="",
                     CloseTime="";
-            boolean wait_switch = false;
+            boolean wait_switch = false, coupon = false;
             float score = 0;
             try {
                 if(!r_object.getString("ImagePath").equals("null")){
@@ -121,6 +121,7 @@ public class GetPlacesOnMap extends AsyncTask<Object, String, String> implements
 
                 r_id = r_object.getString("Id");
                 wait_switch = r_object.getBoolean("WaitListSwitch");
+                coupon = r_object.getBoolean("ExistCoupon");
                 r_County = r_object.getString("R_County");
                 r_Area = r_object.getString("R_Area");
                 r_Name = r_object.getString("R_Name");
@@ -132,6 +133,7 @@ public class GetPlacesOnMap extends AsyncTask<Object, String, String> implements
                 OpenTime = OpenTime.substring(0,OpenTime.lastIndexOf(':'));
                 CloseTime = r_object.getString("CloseTime");
                 CloseTime = CloseTime.substring(0,CloseTime.lastIndexOf(':'));
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -146,6 +148,7 @@ public class GetPlacesOnMap extends AsyncTask<Object, String, String> implements
             intent.putExtra("openTime", OpenTime);
             intent.putExtra("closeTime", CloseTime);
             intent.putExtra("score", score);
+            intent.putExtra("coupon", coupon);
             mActivity.startActivity(intent);
         }
     }

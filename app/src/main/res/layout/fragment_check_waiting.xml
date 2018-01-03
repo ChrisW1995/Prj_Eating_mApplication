@@ -5,9 +5,13 @@
     tools:context="com.example.chriswang.prj_eating2.CheckWaitingFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/swipeRefreshWait"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/check_wait_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    </com.baoyz.widget.PullRefreshLayout>
 </FrameLayout>

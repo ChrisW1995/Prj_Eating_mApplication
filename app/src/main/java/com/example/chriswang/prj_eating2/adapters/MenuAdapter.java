@@ -68,6 +68,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
         }
 
         public void setTv_menu_name(String name) {
+            if(name.equals("null"))
+                name = "";
+
             this.tv_menu_name.setText(name);
         }
     }

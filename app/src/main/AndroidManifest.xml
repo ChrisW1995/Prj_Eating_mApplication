@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.google.android.providers.gsf.permisson.READ_GSERVICES"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permisson.READ_GSERVICES" />
 
     <application
         android:allowBackup="true"
@@ -21,10 +21,10 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait">
@@ -51,9 +51,6 @@
             android:label=""
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RestaurantDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".WaitingActivity"
             android:screenOrientation="portrait" />
 
@@ -76,7 +73,9 @@
         <activity
             android:name=".RestaurantInfoActivity"
             android:label="@string/title_activity_restaurant_info"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CouponActivity" />
+        <activity android:name=".CouponDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/background_text"
         android:ems="10"
         android:hint="登入帳號"
@@ -61,7 +61,7 @@
         android:background="@drawable/background_login_two"
         android:text="註冊"
         android:textColor="#FFF"
-        android:textSize="22sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
@@ -76,7 +76,7 @@
         android:background="@drawable/background_login_two"
         android:text="登入"
         android:textColor="#FFF"
-        android:textSize="22sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtLoginPass" />

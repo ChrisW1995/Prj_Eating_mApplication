@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-
                     transaction.replace(R.id.container, new ListFragment()).commit();
                     return true;
                 case R.id.navigation_search:
@@ -34,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_setting:
                     SettingFragment settingFragment = new SettingFragment();
                     transaction.replace(R.id.container, settingFragment).commit();
+                    return true;
+                case R.id.navigation_info:
+                    transaction.replace(R.id.container, new UserDetailFragment()).commit();
                     return true;
             }
             return false;

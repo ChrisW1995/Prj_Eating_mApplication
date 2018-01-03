@@ -10,7 +10,9 @@ import android.util.Log;
 
 import com.example.chriswang.prj_eating2.R;
 import com.example.chriswang.prj_eating2.adapters.CouponAdapter;
+import com.example.chriswang.prj_eating2.adapters.WaitingAdapter;
 import com.example.chriswang.prj_eating2.model.Coupon;
+import com.example.chriswang.prj_eating2.model.WaitList;
 
 import org.json.JSONArray;
 
@@ -26,31 +28,31 @@ import java.util.ArrayList;
  * Created by ChrisWang on 2017/12/20.
  */
 
-public class FetchCustomerCoupons extends AsyncTask<Object, Void, Void> {
+public class FetchWaitingList extends AsyncTask<Object, Void, Void> {
     Context mContext;
     Activity mActivity;
     String r_id;
     private String mRemoteString;
     private SharedPrefManager sharedPrefManager;
-    private CouponAdapter mCouponAdapter;
-    private ArrayList<Coupon> mCoupons;
-    private RecyclerView mCouponRecycler;
-    public FetchCustomerCoupons(Context mContext, Activity mActivity) {
+    private WaitingAdapter mWaitAdapter;
+    private ArrayList<WaitList> mWaits;
+    private RecyclerView mWaitRecycler;
+    public FetchWaitingList(Context mContext, Activity mActivity) {
         this.mContext = mContext;
         this.mActivity = mActivity;
     }
 
     @Override
     protected Void doInBackground(Object... objects) {
-        mCoupons = (ArrayList<Coupon>) objects[0];
-        mCouponAdapter = (CouponAdapter)objects[1];
-        mCouponRecycler = (RecyclerView)objects[2];
+        mWaits = (ArrayList<WaitList>) objects[0];
+        mWaitAdapter = (WaitingAdapter)objects[1];
+        mWaitRecycler = (RecyclerView)objects[2];
         sharedPrefManager = new SharedPrefManager(mContext);
         String c_id = sharedPrefManager.getC_Id();
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
-        Uri uri = Uri.parse(mContext.getString(R.string.get_received_coupon_api) + c_id);
+        Uri uri = Uri.parse(mContext.getString(R.string.get_waiting_list_api) + c_id);
         URL url;
         try {
             url = new URL(uri.toString());
@@ -75,37 +77,38 @@ public class FetchCustomerCoupons extends AsyncTask<Object, Void, Void> {
             }
 
             mRemoteString = buffer.toString();
-            JSONArray couponsArray = new JSONArray(mRemoteString);
+            JSONArray waitingArray = new JSONArray(mRemoteString);
 
-            Log.v("contentArray", couponsArray.toString());
-            for (int i = 0; i < couponsArray.length(); i++) {
-                String title;
-                String content;
+            Log.v("contentArray", waitingArray.toString());
+            for (int i = 0; i < waitingArray.length(); i++) {
+
+                String addr;
+                int mynum;
+                int rest_num;
+                String r_phone;
                 String startTime;
                 String endTime;
                 String r_id;
-                String id;
-                boolean isReceived;
+                int id;
+                String r_name;
 
-                r_id= couponsArray.getJSONObject(i).getString("R_Id");
-                id = couponsArray.getJSONObject(i).getString("CouponId");
-                title = couponsArray.getJSONObject(i).getString("Title");
-                content = couponsArray.getJSONObject(i).getString("Desciption");
-                startTime = couponsArray.getJSONObject(i).getString("StartTime");
-                startTime = startTime.replace("T"," ");
-                endTime = couponsArray.getJSONObject(i).getString("EndTime");
-                endTime = endTime.replace("T"," ");
-                isReceived = couponsArray.getJSONObject(i).getBoolean("IsReceive");
-                Coupon coupon = new Coupon();
-                coupon.setCouponId(id);
-                coupon.setTitle(title);
-                coupon.setDescription(content);
-                coupon.setStartTime(startTime);
-                coupon.setEndTime(endTime);
-                coupon.setReceived(isReceived);
-                coupon.setR_id(r_id);
 
-                mCoupons.add(coupon);
+                r_id= waitingArray.getJSONObject(i).getString("R_Id");
+                mynum = waitingArray.getJSONObject(i).getInt("MyNum");
+                rest_num = waitingArray.getJSONObject(i).getInt("RestNum");
+                r_name = waitingArray.getJSONObject(i).getString("R_Name");
+                addr = waitingArray.getJSONObject(i).getString("R_Address");
+                id = waitingArray.getJSONObject(i).getInt("Id");
+                WaitList waitList = new WaitList();
+                waitList.setR_name(r_name);
+                waitList.setR_addr(addr);
+                waitList.setR_id(r_id);
+                waitList.setRestNum(rest_num);
+                waitList.setMyNum(mynum);
+                waitList.setId(id);
+
+
+                mWaits.add(waitList);
             }
 
 
@@ -132,9 +135,9 @@ public class FetchCustomerCoupons extends AsyncTask<Object, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         RecyclerView.LayoutManager linearLayout = new LinearLayoutManager(mActivity);
-        mCouponRecycler.setLayoutManager(linearLayout);
-        mCouponRecycler.setHasFixedSize(true);
-        mCouponAdapter = new CouponAdapter(mCoupons, mActivity, mContext);
-        mCouponRecycler.setAdapter(mCouponAdapter);
+        mWaitRecycler.setLayoutManager(linearLayout);
+        mWaitRecycler.setHasFixedSize(true);
+        mWaitAdapter = new WaitingAdapter(mWaits, mActivity);
+        mWaitRecycler.setAdapter(mWaitAdapter);
     }
 }

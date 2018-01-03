@@ -54,7 +54,7 @@ public class ReserveActivity extends AppCompatActivity {
                 Calendar cal = Calendar.getInstance();
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH)+1;
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         ReserveActivity.this,
@@ -101,6 +101,10 @@ public class ReserveActivity extends AppCompatActivity {
                     str_smoke = "否";
                 }else{
                     str_smoke="是";
+                }
+                if(edt_reserve_phone.getText().toString().equals("")){
+                    Toast.makeText(ReserveActivity.this, "請確認欄位是否有遺漏！", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 //to-do list -----
                 Intent i = new Intent(ReserveActivity.this, ReservationDetailActivity.class);
